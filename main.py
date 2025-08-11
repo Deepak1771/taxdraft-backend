@@ -9,6 +9,13 @@ API_KEY = "CHANGE_ME"  # set a real secret later
 
 app = FastAPI(title="SD Tax Engine", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+from fastapi import FastAPI
+
+app = FastAPI(title="Tax Draft Backend", version="1.0.0")
+
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "Tax Draft Backend is running"}
 
 def check_key(x_api_key: Optional[str]):
     if x_api_key != API_KEY:
@@ -38,3 +45,4 @@ def excel(x_api_key: Optional[str] = Header(None)):
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": 'attachment; filename="demo.xlsx"'}
     )
+
